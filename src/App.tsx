@@ -11,18 +11,27 @@ const App: React.FC = () => {
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [noResult, setNoResult] = useState(false)
   const [query, setQuery] = useState('');
 
   const handleSearch = async (searchQuery: string) => {
     setQuery(searchQuery);
     const data = await fetchBooks(searchQuery);
-    setBooks(data.items);
+  
+    if(data.totalItems){
+      setNoResult(false)
+      setBooks(data.items)
+    }else{
+      setBooks([])
+      setNoResult(true)
+    }
     setTotalPages(Math.ceil(data.totalItems / 10));
   };
 
   const handlePageChange = async (page: number) => {
     setCurrentPage(page);
     const data = await fetchBooks(query, (page - 1) * 10);
+   
     setBooks(data.items);
   };
 
@@ -41,6 +50,7 @@ const App: React.FC = () => {
         <DarkModeToggle />
       </div>
       <SearchBar onSearch={handleSearch} />
+       {noResult && <p>No search result</p>}
         <BookList books={books} onSelectBook={handleSelectBook} />
         {books.length > 0 && (
           <Pagination
