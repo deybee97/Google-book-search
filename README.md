@@ -18,5 +18,21 @@ A simple web application to search for books using the Google Books API. Users c
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/google-books-search.git
+   git clone https://github.com/deybee97/Google-book-search.git
    cd google-books-search
+
+2. Install dependencies
+
+   ```bash
+   npm i
+
+3. Start App
+
+   ```bash
+   npm run start
+
+4. To run test
+
+   ```bash
+   npm run test
+
